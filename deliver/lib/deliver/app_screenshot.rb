@@ -57,6 +57,8 @@ module Deliver
       MAC = "Mac"
       # Apple TV
       APPLE_TV = "Apple-TV"
+      # Google Pixel
+      GOOGLE_PIXEL = "GooglePixel"
     end
 
     # @return [Deliver::ScreenSize] the screen size (device type)
@@ -108,7 +110,8 @@ module Deliver
         ScreenSize::MAC => "desktop",
         ScreenSize::IOS_APPLE_WATCH => "watch",
         ScreenSize::IOS_APPLE_WATCH_SERIES4 => "watchSeries4",
-        ScreenSize::APPLE_TV => "appleTV"
+        ScreenSize::APPLE_TV => "appleTV",
+        ScreenSize::GOOGLE_PIXEL => "GooglePixel"
       }
       return matching[self.screen_size]
     end
@@ -141,8 +144,13 @@ module Deliver
         ScreenSize::IOS_IPAD_11_MESSAGES => "iPad 11 (iMessage)",
         ScreenSize::MAC => "Mac",
         ScreenSize::IOS_APPLE_WATCH => "Watch",
+<<<<<<< HEAD
         ScreenSize::IOS_APPLE_WATCH_SERIES4 => "Watch Series4",
         ScreenSize::APPLE_TV => "Apple TV"
+=======
+        ScreenSize::APPLE_TV => "Apple TV",
+        ScreenSize::GOOGLE_PIXEL => "GooglePixel"
+>>>>>>> Patched frameit to support the Google Pixel
       }
       return matching[self.screen_size]
     end
@@ -280,8 +288,15 @@ module Deliver
           [368, 448]
         ],
         ScreenSize::APPLE_TV => [
+<<<<<<< HEAD
           [1920, 1080],
           [3840, 2160]
+=======
+          [1920, 1080]
+        ],
+        ScreenSize::GOOGLE_PIXEL => [
+          [1080, 1920]
+>>>>>>> Patched frameit to support the Google Pixel
         ]
       }
     end
@@ -290,6 +305,8 @@ module Deliver
       size = FastImage.size(path)
 
       UI.user_error!("Could not find or parse file at path '#{path}'") if size.nil? || size.count == 0
+
+      return "GooglePixel" if path.include? "GooglePixel"
 
       # Walk up two directories and test if we need to handle a platform that doesn't support landscape
       path_component = Pathname.new(path).each_filename.to_a[-3]
